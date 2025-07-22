@@ -71,7 +71,8 @@ async function loadCategories() {
     div.innerHTML = `
       <span>${cat.name}</span>
       <div class="category-actions">
-        ✏️ ${!cat.protected ? '🗑️' : ''}
+        <span class="edit">✏️</span>
+        ${!cat.protected ? '<span class="delete">🗑️</span>' : ''}
       </div>
     `;
 
@@ -82,6 +83,35 @@ async function loadCategories() {
       loadSnippets();
     };
 
+    div.querySelector(".edit").onclick = async (e) => {
+    e.stopPropagation();
+    const newName = prompt("Novo nome:", cat.name);
+    if (newName && newName.trim()) {
+      const ref = doc(db, "users", user.uid, "categories", docSnap.id);
+      await updateDoc(ref, { name: newName.trim() });
+      loadCategories();
+    }
+  };
+  
+  if (!cat.protected) {
+    div.querySelector(".delete").onclick = async (e) => {
+      e.stopPropagation();
+      if (confirm(`Excluir "${cat.name}"? Isso apagará todos os snippets desta lista.`)) {
+        const snippetsCol = collection(db, "users", user.uid, "snippets");
+        const snaps = await getDocs(snippetsCol);
+        snaps.forEach(async s => {
+          if (s.data().categoryId === docSnap.id) {
+            await deleteDoc(doc(db, "users", user.uid, "snippets", s.id));
+          }
+        });
+        await deleteDoc(doc(db, "users", user.uid, "categories", docSnap.id));
+        loadCategories();
+        currentCategoryId = null;
+        loadSnippets();
+      }
+    };
+  }
+    
     div.querySelector(".category-actions").children[0].onclick = async (e) => {
       e.stopPropagation();
       const newName = prompt("Novo nome:", cat.name);
