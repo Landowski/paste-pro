@@ -4,12 +4,12 @@ import { getFirestore, doc, getDoc, collection, addDoc, setDoc, getDocs, updateD
 
 // 🔥 CONFIGURE SEUS DADOS!
 const firebaseConfig = {
-  apiKey: "AIzaSyBegicDngP4KCpz-JWMDM1uGd-wsHBxoBs",
-  authDomain: "textshare-92fca.firebaseapp.com",
-  projectId: "textshare-92fca",
-  storageBucket: "textshare-92fca.firebasestorage.app",
-  messagingSenderId: "800854294565",
-  appId: "1:800854294565:web:bcda3e1627ef27e5f1bfcc"
+  apiKey: "AIzaSyC4-YX2cIXN5wEfTMG-CCiL-q6dJiL5EDs",
+  authDomain: "paste-pro-5ce14.firebaseapp.com",
+  projectId: "paste-pro-5ce14",
+  storageBucket: "paste-pro-5ce14.firebasestorage.app",
+  messagingSenderId: "66327050528",
+  appId: "1:66327050528:web:be6bdabdcec3c004f5ff45"
 };
 
 const loadingMessage = document.getElementById("loading-message");
