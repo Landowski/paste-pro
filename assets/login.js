@@ -1,13 +1,24 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword 
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+import { 
+  getFirestore, 
+  doc, 
+  setDoc, 
+  collection, 
+  addDoc 
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 // 🔥 CONFIGURE COM SEUS DADOS!
 const firebaseConfig = {
   apiKey: "AIzaSyC4-YX2cIXN5wEfTMG-CCiL-q6dJiL5EDs",
   authDomain: "paste-pro-5ce14.firebaseapp.com",
   projectId: "paste-pro-5ce14",
-  storageBucket: "paste-pro-5ce14.firebasestorage.app",
+  storageBucket: "paste-pro-5ce14.appspot.com",
   messagingSenderId: "66327050528",
   appId: "1:66327050528:web:be6bdabdcec3c004f5ff45"
 };
@@ -38,11 +49,20 @@ submitBtn.addEventListener("click", async () => {
   } else {
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
+
+      // Cria o documento do usuário na coleção "users"
       await setDoc(doc(db, "users", userCred.user.uid), {
         email: email,
-        assinante: false // Conta Free por padrão
+        admin: false,
+        sound: true,
+        subscriber: false
       });
-      showToast("Conta criada!");
+
+      // Cria a categoria fixa "main" na subcoleção "categories"
+      const categoriesCol = collection(db, "users", userCred.user.uid, "categories");
+      await addDoc(categoriesCol, { name: "main" });
+
+      showToast("Conta criada com sucesso!");
       setTimeout(() => {
         window.location.href = "app.html";
       }, 1000);
@@ -62,5 +82,5 @@ toggleForm.addEventListener("click", () => {
 function showToast(msg) {
   toast.textContent = msg;
   toast.style.display = "block";
-  setTimeout(() => toast.style.display = "none", 3000);
+  setTimeout(() => (toast.style.display = "none"), 4000);
 }
