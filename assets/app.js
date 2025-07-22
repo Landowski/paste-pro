@@ -199,7 +199,8 @@ async function loadSnippets() {
 
   snaps.forEach(docSnap => {
     const s = docSnap.data();
-    if (currentCategoryId && s.categoryId !== currentCategoryId) return;
+    if (currentCategoryId && (s.categoryId || null) !== currentCategoryId) return;
+  
     const div = document.createElement("div");
     div.textContent = s.title || "Sem título";
     div.onclick = () => openSnippet(docSnap.id);
