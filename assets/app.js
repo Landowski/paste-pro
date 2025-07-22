@@ -114,7 +114,7 @@ async function loadCategories() {
       }
     };
   }
-    
+  
     div.querySelector(".category-actions").children[0].onclick = async (e) => {
       e.stopPropagation();
       const newName = prompt("Novo nome:", cat.name);
@@ -164,7 +164,7 @@ async function loadCategories() {
 newNoteBtn.addEventListener("click", () => {
   document.getElementById("home").style.display = "none";
   document.getElementById("editor").style.display = "flex";
-  document.getElementById("note-title").value = "";
+  document.getElementById("note-title").value = "Novo snippet";
   document.getElementById("note-content").value = "";
   currentNoteId = null;
 });
