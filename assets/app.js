@@ -77,10 +77,13 @@ async function loadCategories() {
     `;
 
     div.querySelector("span").onclick = () => {
-      listsToggle.querySelector("div").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#59636e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg> ${cat.name}`;
-      currentCategoryId = docSnap.id;
-      listsDropdown.style.display = "none";
-      loadSnippets();
+    listsToggle.querySelector("div").innerHTML = `
+      <svg ...></svg> ${cat.name}
+    `;
+    // Se for main, zera o ID
+    currentCategoryId = cat.name.toLowerCase() === 'main' ? null : docSnap.id;
+    listsDropdown.style.display = "none";
+    loadSnippets();
     };
 
     div.querySelector(".edit").onclick = async (e) => {
