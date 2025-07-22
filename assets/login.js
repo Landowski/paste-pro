@@ -74,9 +74,9 @@ submitBtn.addEventListener("click", async () => {
 
 toggleForm.addEventListener("click", () => {
   isLogin = !isLogin;
-  formTitle.textContent = isLogin ? "Login" : "Cadastro";
-  submitBtn.textContent = isLogin ? "Entrar" : "Cadastrar";
-  toggleForm.textContent = isLogin ? "Não tem uma conta? Crie uma" : "Já tem uma conta? Entre";
+  formTitle.textContent = isLogin ? "LOGIN" : "SIGN UP";
+  submitBtn.textContent = isLogin ? "LOGIN" : "SIGN UP";
+  toggleForm.textContent = isLogin ? "Do not have a account? Sign up" : "Already have a account? Login";
 });
 
 function showToast(msg) {
