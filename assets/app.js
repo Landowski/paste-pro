@@ -29,8 +29,123 @@ onAuthStateChanged(auth, async (u) => {
   }
   user = u;
 
-  const userDoc = await getDoc(doc(db, "users", user.uid));
-  isPro = userDoc.data().assinante;
+  let currentCategoryId = null; // Armazena a categoria ativa
+const listsToggle = document.getElementById("lists");
+const listsDropdown = document.getElementById("lists-dropdown");
+
+// Toggle dropdown
+listsToggle.addEventListener("click", (e) => {
+  e.stopPropagation();
+  listsDropdown.style.display = listsDropdown.style.display === "none" ? "flex" : "none";
+});
+
+// Fecha dropdown ao clicar fora
+document.body.addEventListener("click", (e) => {
+  if (!listsToggle.contains(e.target)) {
+    listsDropdown.style.display = "none";
+  }
+});
+
+// Carrega categorias
+async function loadCategories() {
+  const catsCol = collection(db, "users", user.uid, "categories");
+  const snapshot = await getDocs(catsCol);
+  const catsArray = [];
+
+  snapshot.forEach(docSnap => {
+    const cat = docSnap.data();
+    catsArray.push({
+      id: docSnap.id,
+      name: cat.name,
+      protected: cat.protected || false
+    });
+  });
+
+  listsDropdown.innerHTML = "";
+  catsArray.forEach(cat => {
+    const div = document.createElement("div");
+    div.className = "category-item";
+    div.innerHTML = `
+      <span>${cat.name}</span>
+      <div class="category-actions">
+        ✏️ 
+        ${!cat.protected ? '🗑️' : ''}
+      </div>
+    `;
+
+    div.querySelector("span").onclick = () => {
+      listsToggle.querySelector("div").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#59636e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg> ${cat.name}`;
+      currentCategoryId = cat.id;
+      listsDropdown.style.display = "none";
+      loadNotes();
+    };
+
+    div.querySelector(".category-actions").children[0].onclick = async (e) => {
+      e.stopPropagation();
+      const newName = prompt("Novo nome:", cat.name);
+      if (newName && newName.trim()) {
+        const ref = doc(db, "users", user.uid, "categories", cat.id);
+        await updateDoc(ref, { name: newName.trim() });
+        loadCategories();
+      }
+    };
+
+    if (!cat.protected) {
+      div.querySelector(".category-actions").children[1].onclick = async (e) => {
+        e.stopPropagation();
+        if (confirm(`Excluir "${cat.name}"? Isso apagará todos os snippets desta lista.`)) {
+          // Deleta todos snippets da categoria
+          const snippetsCol = collection(db, "users", user.uid, "snippets");
+          const snaps = await getDocs(snippetsCol);
+          snaps.forEach(async s => {
+            if (s.data().categoryId === cat.id) {
+              await deleteDoc(doc(db, "users", user.uid, "snippets", s.id));
+            }
+          });
+          await deleteDoc(doc(db, "users", user.uid, "categories", cat.id));
+          loadCategories();
+          currentCategoryId = null;
+          loadNotes();
+        }
+      };
+    }
+
+    listsDropdown.appendChild(div);
+  });
+
+  // Botão adicionar nova lista
+  const addBtn = document.createElement("div");
+  addBtn.id = "add-category-btn";
+  addBtn.innerHTML = "+ Nova Lista";
+  addBtn.onclick = async () => {
+    const newName = prompt("Nome da nova lista:");
+    if (newName && newName.trim()) {
+      await addDoc(collection(db, "users", user.uid, "categories"), { name: newName.trim(), protected: false });
+      loadCategories();
+    }
+  };
+  listsDropdown.appendChild(addBtn);
+}
+
+// Recarrega notas filtradas
+async function loadNotes() {
+  const snippetsCol = collection(db, "users", user.uid, "snippets");
+  let qSnap = await getDocs(snippetsCol);
+
+  notesList.innerHTML = "";
+  qSnap.forEach(docSnap => {
+    const snip = docSnap.data();
+    if (currentCategoryId && snip.categoryId !== currentCategoryId) return;
+    const div = document.createElement("div");
+    div.textContent = snip.title || "Sem título";
+    div.onclick = () => openNote(docSnap.id);
+    notesList.appendChild(div);
+  });
+  notesList.style.display = "flex";
+}
+
+loadCategories();
+
 
   loadNotes();
   loadingMessage.style.display = "none";
@@ -39,14 +154,12 @@ onAuthStateChanged(auth, async (u) => {
 const notesList = document.getElementById("notes-list");
 const newNoteBtn = document.getElementById("new-note");
 
-newNoteBtn.addEventListener("click", async () => {
-  const notesCol = collection(db, "users", user.uid, "notes");
-  const docRef = await addDoc(notesCol, {
-  titulo: 'Nova nota',
-  texto: "",
-  publica: true,
-  userId: user.uid,
-  ordem: Date.now() // campo de ordem
+newNoteBtn.addEventListener("click", () => {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("editor").style.display = "flex";
+  document.getElementById("note-title").value = "";
+  document.getElementById("note-content").value = "";
+  currentNoteId = null;
 });
 
   // 👇 Cria também o index auxiliar
@@ -101,6 +214,22 @@ async function saveNewOrder() {
     const noteRef = doc(db, "users", user.uid, "notes", noteId);
     await updateDoc(noteRef, { ordem: i });
   }
+}
+
+async function saveNewNote() {
+  const title = document.getElementById("note-title").value.trim();
+  const content = document.getElementById("note-content").value.trim();
+
+  if (!title) return alert("Título é obrigatório");
+
+  const newNote = {
+    title: title,
+    content: content,
+    categoryId: currentCategoryId || null
+  };
+  const ref = await addDoc(collection(db, "users", user.uid, "snippets"), newNote);
+  openNote(ref.id);
+  loadNotes();
 }
 
 async function openNote(id) {
