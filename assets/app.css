@@ -345,3 +345,34 @@ input:checked + .slider:before {
   from { bottom: 30px; opacity: 1; }
   to { bottom: -200px; opacity: 0; }
 }
+
+#lists-dropdown {
+  background: #f6f8fa;
+  border: 1px solid #d1d9e0;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 999;
+  width: 180px;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.list-item:hover {
+  background: #e5e5e5;
+}
+
+.add-list {
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px;
+  text-align: center;
+  border-top: 1px solid #d1d9e0;
+}
