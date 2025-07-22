@@ -50,7 +50,7 @@ submitBtn.addEventListener("click", async () => {
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
 
-      // Cria o documento do usuário na coleção "users"
+      // Cria o documento do usuário
       await setDoc(doc(db, "users", userCred.user.uid), {
         email: email,
         admin: false,
@@ -58,9 +58,12 @@ submitBtn.addEventListener("click", async () => {
         subscriber: false
       });
 
-      // Cria a categoria fixa "main" na subcoleção "categories"
+      // Cria a categoria 'main' com campo de proteção
       const categoriesCol = collection(db, "users", userCred.user.uid, "categories");
-      await addDoc(categoriesCol, { name: "main" });
+      await addDoc(categoriesCol, { 
+        name: "main",
+        protected: true // 🔒 Marcação de proteção
+      });
 
       showToast("Conta criada com sucesso!");
       setTimeout(() => {
@@ -74,9 +77,9 @@ submitBtn.addEventListener("click", async () => {
 
 toggleForm.addEventListener("click", () => {
   isLogin = !isLogin;
-  formTitle.textContent = isLogin ? "LOGIN" : "SIGN UP";
-  submitBtn.textContent = isLogin ? "LOGIN" : "SIGN UP";
-  toggleForm.textContent = isLogin ? "Do not have a account? Sign up" : "Already have a account? Login";
+  formTitle.textContent = isLogin ? "Login" : "Cadastro";
+  submitBtn.textContent = isLogin ? "Entrar" : "Cadastrar";
+  toggleForm.textContent = isLogin ? "Não tem uma conta? Crie uma" : "Já tem uma conta? Entre";
 });
 
 function showToast(msg) {
