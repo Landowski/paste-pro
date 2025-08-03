@@ -28,7 +28,7 @@
         }
 
         function redirectToStripeCheckout(email) {
-            const stripe = Stripe('pk_live_51H8nFSJVDeGOx1BERkH0kcptYEKgHkWiEn5RSqR3GIUabD6qWrzGEmyBX0bNUChuFvn2iBAtcqLSpc5bxx6DcOUy00aCMvsafk');
+            const stripe = Stripe('pk_test_51H8nFSJVDeGOx1BE0FnEeujSVTeUTzELHWZareDBpG9Bb4vt9djXeMHIVlpPe3dTMpfBBEF75zWOpb5STqNUYXUJ00FykAJCjp');
             stripe.redirectToCheckout({
                 lineItems: [{ price: priceId, quantity: 1 }],
                 mode: 'subscription',
@@ -44,5 +44,6 @@
     </script>
 </body>
 </html>
+
 
 
