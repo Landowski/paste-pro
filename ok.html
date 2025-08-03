@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Paste PRO</title>
+    <link rel="icon" type="image/png" href="images/icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            font-family: "Roboto", sans-serif;
+            color: #111;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        h2 {
+            margin: 0;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        button {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            outline: none;
+            border: none;
+            background-color: #2D6AFF;
+            border-bottom: 3px solid #0032b1;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #1557ff;
+        }
+        #loading {
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 20px;
+        }
+        #success {
+            display: none;
+            width: fit-content;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading">
+        <img src="images/loading.svg" width="24" height="24">
+        Loading...<br/>
+        Carregando...<br/>
+        Cargando...
+    </div>
+    <div id="success">
+        <span style="font-size: 52px">🥳</span>
+        <h2>Congratulations! You have subscribed to Paste PRO!</h2>
+        <h2>Parabéns! Você assinou o Paste PRO!</h2>
+        <h2>¡Felicidades! ¡Te has suscrito a Paste PRO!</h2>
+        <br/>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.3/dist/confetti.browser.js"></script>
+
+    <script>
+        setTimeout(() => {
+                    document.getElementById("loading").style.display = 'none';
+                    document.getElementById("success").style.display = 'flex';
+                    confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    zIndex: 9999
+                })
+                }, "4000");
+    </script>
+</body>
+</html>
