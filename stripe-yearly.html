@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow" />
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <script>
+        function detectUserCurrency() {
+            const userLocale = navigator.language || navigator.userLanguage;
+            if (userLocale.startsWith('pt')) {
+                return 'BRL';
+            }
+                return 'USD';
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const userEmail = urlParams.get('email');
+        const currency = detectUserCurrency();
+        let priceId;
+
+        if (currency === 'BRL') {
+            priceId = 'price_1Rs6k7JVDeGOx1BE9M71S8Sv';
+        } else {
+            priceId = 'price_1Rs6qRJVDeGOx1BE8MNsqoPS';
+        }
+
+        function redirectToStripeCheckout(email) {
+            const stripe = Stripe('pk_test_51H8nFSJVDeGOx1BE0FnEeujSVTeUTzELHWZareDBpG9Bb4vt9djXeMHIVlpPe3dTMpfBBEF75zWOpb5STqNUYXUJ00FykAJCjp');
+            stripe.redirectToCheckout({
+                lineItems: [{ price: priceId, quantity: 1 }],
+                mode: 'subscription',
+                customerEmail: email,
+                successUrl: 'https://landowski.github.io/paste-pro/ok.html',
+                cancelUrl: 'https://landowski.github.io/paste-pro/',
+            });
+        }
+
+        if (userEmail) {
+            redirectToStripeCheckout(userEmail);
+        }
+    </script>
+</body>
+</html>
+
+
