@@ -1,0 +1,179 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <title>Paste PRO - Text Snippets Browser Extension</title>
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="preload" href="assets/css.css" as="style">
+    <link rel="stylesheet" href="assets/css.css">
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <!-- Desktop Content -->
+    <div id="desktopContent" class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#dddbe6] px-10 py-3">
+          <div class="flex items-center gap-4 text-[#121118]" style="gap: 7px;">
+            <div class="size-4">
+              <img src="assets/icon.png" />
+            </div>
+            <h2 id="title" class="text-[#121118] text-lg font-bold leading-tight tracking-[-0.015em] title-bold" style="font-size: 21px">Paste PRO</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex gap-2">
+              <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#8a74f6] text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                <span id="install" class="truncate">INSTALL</span>
+              </button>
+            </div>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div class="@container">
+              <div class="flex flex-col gap-6 px-4 py-10 @[480px]:gap-8 @[864px]:flex-row">
+                <img src="assets/tela.png" width="440" />
+                <div class="flex flex-col gap-6 @[480px]:min-w-[400px] @[480px]:gap-8 @[864px]:justify-center">
+                  <div class="flex flex-col gap-2 text-left">
+                    <h1 id="mainHeading"
+                      class="text-[#121118] text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]"
+                    >
+                      Boost Your Productivity with Paste Pro
+                    </h1>
+                    <h2 id="mainDescription" class="text-[#121118] text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
+                      Paste Pro is a browser extension that allows you to paste predefined text snippets into any text box with a simple right-click. Say goodbye to repetitive
+                      typing and hello to efficiency.
+                    </h2>
+                  </div>
+                  <button
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#8a74f6] text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]"
+                  >
+                    <span id="getItNow" class="truncate">Get It Now</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col gap-10 px-4 py-10 @container">
+              <div class="flex flex-col gap-4">
+                <h1 id="howItWorks"
+                  class="text-[#121118] tracking-light text-[32px] font-bold leading-tight @[480px]:text-4xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em] max-w-[720px]"
+                >
+                  How Paste Pro Works
+                </h1>
+                <p id="howItWorksDesc" class="text-[#121118] text-base font-normal leading-normal max-w-[720px]">
+                  Paste Pro simplifies your workflow by allowing you to quickly insert frequently used text snippets. Here's how it works:
+                </p>
+              </div>
+              <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-0">
+                <div class="flex flex-1 gap-3 rounded-lg border border-[#dddbe6] bg-white p-4 flex-col">
+                  <div class="text-[#121118]" data-icon="Clipboard" data-size="24px" data-weight="regular">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                      <path
+                        d="M200,32H163.74a47.92,47.92,0,0,0-71.48,0H56A16,16,0,0,0,40,48V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm-72,0a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm72,184H56V48H82.75A47.93,47.93,0,0,0,80,64v8a8,8,0,0,0,8,8h80a8,8,0,0,0,8-8V64a47.93,47.93,0,0,0-2.75-16H200Z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <h2 id="defineSnippets" class="text-[#121118] text-base font-bold leading-tight">Define Your Snippets</h2>
+                    <p id="defineSnippetsDesc" class="text-[#67608a] text-sm font-normal leading-normal">
+                      Create and manage your library of text snippets, such as email signatures, common responses, or code snippets.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex flex-1 gap-3 rounded-lg border border-[#dddbe6] bg-white p-4 flex-col">
+                  <div class="text-[#121118]" data-icon="Mouse" data-size="24px" data-weight="regular">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                      <path
+                        d="M144,16H112A64.07,64.07,0,0,0,48,80v96a64.07,64.07,0,0,0,64,64h32a64.07,64.07,0,0,0,64-64V80A64.07,64.07,0,0,0,144,16Zm48,64v24H136V32h8A48.05,48.05,0,0,1,192,80ZM112,32h8v72H64V80A48.05,48.05,0,0,1,112,32Zm32,192H112a48.05,48.05,0,0,1-48-48V120H192v56A48.05,48.05,0,0,1,144,224Z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <h2 id="rightClickPaste" class="text-[#121118] text-base font-bold leading-tight">Right-Click to Paste</h2>
+                    <p id="rightClickPasteDesc" class="text-[#67608a] text-sm font-normal leading-normal">In any text box, right-click to access your snippets and select the one you want to paste.</p>
+                  </div>
+                </div>
+                <div class="flex flex-1 gap-3 rounded-lg border border-[#dddbe6] bg-white p-4 flex-col">
+                  <div class="text-[#121118]" data-icon="Clock" data-size="24px" data-weight="regular">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                      <path
+                        d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <h2 id="saveTime" class="text-[#121118] text-base font-bold leading-tight">Save Time and Effort</h2>
+                    <p id="saveTimeDesc" class="text-[#67608a] text-sm font-normal leading-normal">
+                      Reduce typing errors and save valuable time on repetitive tasks, allowing you to focus on what matters most.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="@container">
+              <div class="flex flex-col justify-end gap-6 px-4 py-10 @[480px]:gap-8 @[480px]:px-10 @[480px]:py-20">
+                <div class="flex flex-col gap-2 text-center">
+                  <h1 id="readyHeading"
+                    class="text-[#121118] tracking-light text-[32px] font-bold leading-tight @[480px]:text-4xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em] max-w-[720px]" style="align-self: center;"
+                  >
+                    Ready to Supercharge Your Productivity?
+                  </h1>
+                  <p id="readyDesc" class="text-[#121118] text-base font-normal leading-normal max-w-[720px">Download Paste Pro today and experience the difference. It's free!</p>
+                </div>
+                <div class="flex flex-1 justify-center">
+                  <div class="flex justify-center">
+                    <button
+                      class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#8a74f6] text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] grow"
+                    >
+                      <span id="getStarted" class="truncate">Get Started</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="flex justify-center">
+          <div class="flex max-w-[960px] flex-1 flex-col">
+            <footer class="flex flex-col gap-6 px-5 py-10 text-center @container">
+              <div class="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
+                <a id="privacyPolicy" class="text-[#67608a] text-base font-normal leading-normal min-w-40" href="#">Privacy Policy</a>
+                <a id="termsOfService" class="text-[#67608a] text-base font-normal leading-normal min-w-40" href="#">Terms of Service</a>
+                <a id="contactUs" class="text-[#67608a] text-base font-normal leading-normal min-w-40" href="#">Contact Us</a>
+              </div>
+            </footer>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Mobile Content -->
+    <div id="mobileContent" class="flex flex-col items-center justify-center min-h-screen bg-white px-4" style="display: none; font-family: Inter, 'Noto Sans', sans-serif;">
+      <div class="text-center max-w-md">
+        <div class="mb-8">
+          <div class="flex items-center justify-center gap-2 mb-4">
+            <div class="size-8">
+              <img src="assets/icon.png" alt="Paste PRO" />
+            </div>
+            <h1 class="text-2xl font-bold text-[#121118]">Paste PRO</h1>
+          </div>
+        </div>
+        
+        <div class="bg-[#f8f7fc] rounded-lg p-6 mb-6">
+          <div class="text-6xl mb-4">💻</div>
+          <h2 id="mobileTitle" class="text-xl font-bold text-[#121118] mb-3">Desktop Only</h2>
+          <p id="mobileMessage" class="text-[#67608a] text-base leading-relaxed">
+            This page is designed for desktop computers only. Please access it from a desktop or laptop computer for the best experience.
+          </p>
+        </div>
+        
+        <div class="text-center">
+          <p class="text-sm text-[#67608a]">
+            Thank you for your understanding
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js.js"></script>
+  </body>
+</html>
