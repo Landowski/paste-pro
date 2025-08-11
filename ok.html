@@ -27,6 +27,7 @@
         h2 {
             margin: 0;
             margin-bottom: 5px;
+            text-align: center;
         }
 
         p {
@@ -76,33 +77,112 @@
 <body>
     <div id="loading">
         <img src="assets/loading.svg" width="24" height="24">
-        Loading...<br/>
-        Carregando...<br/>
-        Cargando...
+        <h2 id="loading-text"></h2>
     </div>
     <div id="success">
         <span style="font-size: 52px">🥳</span>
-        <h2>Congratulations! You have subscribed to Paste PRO!</h2>
-        <h2>Parabéns! Você assinou o Paste PRO!</h2>
-        <h2>¡Felicidades! ¡Te has suscrito a Paste PRO!</h2>
+        <h2 id="success-text"></h2>
         <br/>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.3/dist/confetti.browser.js"></script>
 
     <script>
+        // Translations object
+        const translations = {
+            en: {
+                loading: "Loading...",
+                success: "Congratulations! You have subscribed to Paste PRO!"
+            },
+            de: {
+                loading: "Laden...",
+                success: "Glückwunsch! Sie haben Paste PRO abonniert!"
+            },
+            es: {
+                loading: "Cargando...",
+                success: "¡Felicidades! ¡Te has suscrito a Paste PRO!"
+            },
+            fr: {
+                loading: "Chargement...",
+                success: "Félicitations ! Vous avez souscrit à Paste PRO !"
+            },
+            it: {
+                loading: "Caricamento...",
+                success: "Congratulazioni! Ti sei iscritto a Paste PRO!"
+            },
+            ja: {
+                loading: "読み込み中...",
+                success: "おめでとうございます！Paste PROにご登録いただきました！"
+            },
+            ko: {
+                loading: "로딩 중...",
+                success: "축하합니다! Paste PRO에 구독하셨습니다!"
+            },
+            pt_BR: {
+                loading: "Carregando...",
+                success: "Parabéns! Você assinou o Paste PRO!"
+            },
+            ru: {
+                loading: "Загрузка...",
+                success: "Поздравляем! Вы подписались на Paste PRO!"
+            },
+            zh: {
+                loading: "加载中...",
+                success: "恭喜！您已订阅 Paste PRO！"
+            }
+        };
+
+        // Get user's browser language
+        function getUserLanguage() {
+            const lang = navigator.language || navigator.userLanguage;
+            
+            // Check for exact match first (like pt-BR)
+            if (translations[lang]) {
+                return lang;
+            }
+            
+            // Check for language code with underscore (pt_BR)
+            const langWithUnderscore = lang.replace('-', '_');
+            if (translations[langWithUnderscore]) {
+                return langWithUnderscore;
+            }
+            
+            // Check for base language (pt from pt-BR)
+            const baseLang = lang.split('-')[0];
+            if (baseLang === 'pt') {
+                return 'pt_BR';
+            }
+            
+            // Check if base language exists in translations
+            for (const key in translations) {
+                if (key.startsWith(baseLang)) {
+                    return key;
+                }
+            }
+            
+            // Default to English if no match
+            return 'en';
+        }
+
+        // Set texts based on user language
+        const userLang = getUserLanguage();
+        const texts = translations[userLang];
+
+        document.getElementById('loading-text').textContent = texts.loading;
+        document.getElementById('success-text').textContent = texts.success;
+
+        // Show success after 4 seconds
         setTimeout(() => {
-                    document.getElementById("loading").style.display = 'none';
-                    document.getElementById("success").style.display = 'flex';
-                    confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    zIndex: 9999
-                })
-                }, "4000");
+            document.getElementById("loading").style.display = 'none';
+            document.getElementById("success").style.display = 'flex';
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                zIndex: 9999
+            })
+        }, 4000);
     </script>
 </body>
 
 </html>
-
