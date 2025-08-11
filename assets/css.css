@@ -1,24 +1,24 @@
 @font-face {
 font-family: 'Oxanium'; 
-src: url('assets/Oxanium-Regular.ttf');
+src: url('Oxanium-Regular.ttf');
 font-weight: 400;
 }
 
 @font-face {
 font-family: 'Oxanium'; 
-src: url('assets/Oxanium-Bold.ttf');
+src: url('Oxanium-Bold.ttf');
 font-weight: 700;
 }
 
 @font-face {
 font-family: 'Roboto';
-src: url('assets/Roboto-Regular.ttf');
+src: url('Roboto-Regular.ttf');
 font-weight: 400;
 }
 
 @font-face {
 font-family: 'Roboto';
-src: url('assets/Roboto-Bold.ttf');
+src: url('Roboto-Bold.ttf');
 font-weight: 700;
 }
 
@@ -44,3 +44,4 @@ button {
 font-family: "Oxanium", sans-serif !important;
 
 }
+
