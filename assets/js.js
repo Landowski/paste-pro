@@ -304,11 +304,36 @@ function handleResponsive() {
   }
 }
 
+function redirectToChromeWebStore() {
+  window.open('https://chromewebstore.google.com/detail/paste-pro-text-snippets/pnhlkmibmkgbccponpdmbehbhlnapkme', '_blank');
+}
+
+function setupInstallButtons() {
+  const installButtons = [
+    document.getElementById('install'),
+    document.getElementById('getItNow'),
+    document.getElementById('getStarted')
+  ].filter(button => button !== null);
+  
+  installButtons.forEach(button => {
+    button.addEventListener('click', redirectToChromeWebStore);
+    
+    if (button.id === 'install' || button.id === 'getItNow' || button.id === 'getStarted') {
+      const parentButton = button.closest('button');
+      if (parentButton && !parentButton.hasListener) {
+        parentButton.addEventListener('click', redirectToChromeWebStore);
+        parentButton.hasListener = true;
+      }
+    }
+  });
+}
+
 // Initialize the page
 function init() {
   const userLang = detectLanguage();
   translatePage(userLang);
   handleResponsive();
+  setupInstallButtons(); 
 }
 
 // Event listeners
@@ -321,4 +346,5 @@ window.PastePro = {
   translatePage,
   isMobileDevice,
   handleResponsive
+
 };
